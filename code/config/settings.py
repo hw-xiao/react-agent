@@ -30,6 +30,13 @@ ENABLE_RAG = os.getenv("QWEN_ENABLE_RAG", "0").lower() in ("1", "true", "yes")
 SKIP_GPU_CHECK = os.getenv("QWEN_SKIP_GPU_CHECK", "0").lower() in ("1", "true", "yes")
 FORCE_CPU = os.getenv("QWEN_FORCE_CPU", "0").lower() in ("1", "true", "yes")
 
+# ── 邮件与定时任务配置 ──
+MAIL_SMTP_HOST = os.getenv("MAIL_SMTP_HOST", "smtp.qq.com")
+MAIL_SMTP_PORT = int(os.getenv("MAIL_SMTP_PORT", "465"))
+MAIL_USERNAME = os.getenv("MAIL_USERNAME", "416650488@qq.com")
+MAIL_PASSWORD = os.getenv("MAIL_PASSWORD", "")
+MAIL_RECEIVER = os.getenv("MAIL_RECEIVER", "416650488@qq.com")
+
 # ── RAG 知识库配置 ──
 DATA_ROOT = os.path.join(PROJECT_ROOT, "data")
 RAG_DATA_DIR = os.getenv("RAG_DATA_DIR", os.path.join(DATA_ROOT, "knowledge"))

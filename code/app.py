@@ -22,7 +22,9 @@ from code.api.routes import router, init_service, register_exception_handlers
 from code.config.settings import HOST, PORT, MODEL_ID
 from code.tools import weather  # noqa: F401 — 触发天气工具注册
 from code.tools import rag_tool  # noqa: F401 — 触发RAG知识库工具注册
+from code.tools import market_tool  # noqa: F401 — 触发财经工具注册
 from code.utils.logger import get_logger
+from code.utils.market_report import start_market_monitor
 
 log = get_logger("app")
 
@@ -62,6 +64,9 @@ def main():
 
     # 初始化模型（加载到 GPU/CPU）
     init_service(MODEL_ID)
+
+    # 启动财经热点监控：启动时立即执行一次，再在每天 08:00 执行
+    start_market_monitor()
 
     # 创建并运行 FastAPI 应用
     app = create_app()

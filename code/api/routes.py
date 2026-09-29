@@ -20,6 +20,7 @@ from code.config.settings import (
 )
 from code.models.qwen_adapter import QwenAdapter
 from code.utils.logger import get_logger, log_api_request, log_api_response
+from code.utils.market_report import run_market_report_cycle
 
 log = get_logger("api")
 
@@ -125,6 +126,19 @@ def list_models():
             "created": 0,
             "owned_by": "local",
         }]
+    }
+
+
+@router.get("/v1/market/report")
+def trigger_market_report():
+    """手动触发财经热点汇总与邮件推送。"""
+    report = run_market_report_cycle()
+    return {
+        "status": "ok",
+        "message": "财经热点汇总已生成并尝试推送邮件",
+        "email_sent": report.get("email_sent", False),
+        "receiver": report.get("email_receiver", ""),
+        "generated_at": report.get("generated_at", ""),
     }
 
 
